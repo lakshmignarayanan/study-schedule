@@ -16,3 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+$router->group(['middleware' => ['validation']], function () use ($router)
+{
+    $router->get('/schedule', ['as' => 'schedule', 'uses' => 'ScheduleController@get']);
+    $router->post('/schedule', ['as' => 'schedule', 'uses' => 'ScheduleController@post']); //since we need to be able to accept large request body
+});
