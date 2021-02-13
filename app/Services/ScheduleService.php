@@ -12,6 +12,7 @@ class ScheduleService {
         "data" => [],
         "error" => []
     ];
+    const ENTITY = "schedule";
     private $time_period = 0;
     private $time_period_in_units = "";//week, month...
     private $available_time_in_minutes_per_unit = 0;
@@ -73,7 +74,7 @@ class ScheduleService {
             if($current_schedule_time < $this->available_time_in_minutes_per_unit && 
                 (
                     ($current_schedule_time + $activity["durationMinutes"] <= $this->available_time_in_minutes_per_unit)
-                    || ($current_schedule_time <= $this->available_time_in_minutes_per_unit && $activity["durationMinutes"] <= $this->average_course_duration)
+                    || ($current_schedule_time <= $this->available_time_in_minutes_per_unit && $activity["durationMinutes"] >= $this->average_course_duration)
                 )) {
                 //add to current schedule
                 if(!isset($result[$current_schedule_unit])) {
@@ -103,7 +104,7 @@ class ScheduleService {
             }
         }
         $this->result["code"] = HTTPConstant::OK;
-        $this->result["data"] = $result;
+        $this->result["data"] = [self::ENTITY => $result];
         return $this->result;
     }
 
