@@ -1,0 +1,1 @@
+@sections('course_content')

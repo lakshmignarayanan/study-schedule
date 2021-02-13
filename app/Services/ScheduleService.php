@@ -85,7 +85,8 @@ class ScheduleService {
                         "totalTimeInWords" => "",
                     ];
                 }
-                $result[$current_schedule_unit]["activities"][] = $activity["name"];
+                unset($activity["activityId"]);
+                $result[$current_schedule_unit]["activities"][] = $activity;
                 $current_schedule_time += $activity["durationMinutes"];
             } else {
                 //calculate total time for past week
@@ -94,15 +95,21 @@ class ScheduleService {
                 $result[$current_schedule_unit]["totalTimeInWords"] = $previous_schedule_time;
                 // increment for new schedule unit
                 $current_schedule_unit++;
+                unset($activity["activityId"]);
                 $result[$current_schedule_unit] = [
                     "name" => ucfirst($this->time_period_in_units." ".$current_schedule_unit),
-                    "activities" => [$activity["name"]],
+                    "activities" => [$activity],
                     "totalTimeInMinutes" => 0,
                     "totalTimeInWords" => "",
                 ];
                 $current_schedule_time = $activity["durationMinutes"];
             }
         }
+        //last schedule
+        $previous_schedule_time = Util::minutesToWordsConverter($current_schedule_time);
+        $result[$current_schedule_unit]["totalTimeInMinutes"] = $current_schedule_time;
+        $result[$current_schedule_unit]["totalTimeInWords"] = $previous_schedule_time;
+        
         $this->result["code"] = HTTPConstant::OK;
         $this->result["data"] = [self::ENTITY => $result];
         return $this->result;

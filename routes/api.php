@@ -20,6 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 $router->group(['prefix' => '/v1', 'middleware' => ['validation']], function () use ($router)
 {
-    $router->get('/schedule', ['as' => 'schedule', 'uses' => 'ScheduleController@get']);
-    $router->post('/schedule', ['as' => 'schedule', 'uses' => 'ScheduleController@post']); //since we need to be able to accept large request body
+    $router->get('/schedule', ['as' => 'schedule', 'uses' => 'Api\ScheduleController@get']);
+    $router->post('/schedule', ['as' => 'schedule', 'uses' => 'Api\ScheduleController@post']); //since we need to be able to accept large request body
 });

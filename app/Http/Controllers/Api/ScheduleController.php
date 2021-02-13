@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Services\ScheduleService;
 use App\Constants\HTTPConstant;
 use App\Helpers\ResponseHelper;
 use Theme;
+use App\Http\Controllers\Controller;
 
 class ScheduleController extends Controller {
 
@@ -26,8 +27,8 @@ class ScheduleController extends Controller {
 
         $this->scheduleService->init($requestData);
         $scheduleData = $this->scheduleService->calculate();
-        return Theme::view('schedule', $scheduleData);
-        // return ResponseHelper::format($scheduleData);
+        // return Theme::view('schedule', $scheduleData);
+        return ResponseHelper::format($scheduleData);
     }
 
     public function post() {
@@ -37,8 +38,7 @@ class ScheduleController extends Controller {
 
         $this->scheduleService->init($requestData);
         $scheduleData = $this->scheduleService->calculate();
-        return Theme::view('schedule', $scheduleData);
-        // return ResponseHelper::format($scheduleData);
+        return ResponseHelper::format($scheduleData);
     }
 
 }
