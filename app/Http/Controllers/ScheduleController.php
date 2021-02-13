@@ -23,7 +23,7 @@ class ScheduleController extends Controller {
         $limit = $requestData['limit']??Config('schedule.limit');
         $offset = $requestData['offset']??0;
 
-        $this->scheduleService->setPreconditions($requestData);
+        $this->scheduleService->init($requestData);
         $scheduleData = $this->scheduleService->calculate();
         return ResponseHelper::format($scheduleData);
     }
@@ -33,7 +33,7 @@ class ScheduleController extends Controller {
         $limit = $requestData['limit']??Config('schedule.limit');
         $offset = $requestData['offset']??0;
 
-        $this->scheduleService->setPreconditions($requestData);
+        $this->scheduleService->init($requestData);
         $scheduleData = $this->scheduleService->calculate();
         return ResponseHelper::format($scheduleData);
     }
